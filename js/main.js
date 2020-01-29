@@ -45,64 +45,75 @@ function cities(){
         //add the row's html string to the table
         $("table").append(rowHtml);
     };
-
+    //add city population to the table
     addColumns(cityPop);
+
+    //add click event and color changing event to the table
     addEvents();
 };
 
+//function to add column values (e.g., city population) to the table
 function addColumns(cityPop){
 
+  // for each tr (table row)
     $('tr').each(function(i){
-
+      // if this is the first row
     	if (i == 0){
-
+      // append an new th (table head) as a new item to this row
     		$(this).append('<th>City Size</th>');
     	} else {
-
+        // claim a variable called citySize
     		var citySize;
-
+        // if the population of the city is smaller than 100000, then we assign
+        // the citySize as Small
     		if (cityPop[i-1].population < 100000){
     			citySize = 'Small';
-
+        // if the population of the city is smaller than 500000 and equal or
+        // greater than 100000, then we assign the citySize as Medium
     		} else if (cityPop[i-1].population < 500000){
-    			citysize = 'Medium';
-
+    			citySize = 'Medium';
+        // if the population of the city is equal or greater than 500000,
+        // then we assign the citySize as Large
     		} else {
     			citySize = 'Large';
     		};
-
-    		$(this).append('<td' + citySize + '</td>');
+        // append the citySize value to the end of each tr as a new td
+    		$(this).append('<td>' + citySize + '</td>');
     	};
     });
 };
 
+//function to add click event and color changing event to the table
 function addEvents(){
-
-	$('#table').mouseover(function(){
-
+  // set the function to react the mouseover event on the table
+	$('table').mouseover(function(){
+  // claim a variable (string) to store color information
 		var color = "rgb(";
-
+    // loop to assign value to red, green and blue
 		for (var i=0; i<3; i++){
-
+      // generate a random integar number between 0 and 255
 			var random = Math.round(Math.random() * 255);
-
-			color += "random";
-
+      // store the color value in the color string
+			color += random;
+      // when it is not the blue (final) color value, add a comma and continue
 			if (i<2){
 				color += ",";
-
+      // when it is the blue (final) color value, add a bracket to complete the string
 			} else {
 				color += ")";
 		};
-
+    }
+    // assign the color value to the stylesheet of the table using jquery css method
 		$(this).css('color', color);
-	}});
 
+	});
+
+  // define the function to respond the click event on the table
 	function clickme(){
-
+    // when click on the table, popup the alert dialog with a custom message
 		alert('Hey, you clicked me!');
 	};
-
+// let the clickme function respond the click event
 	$('table').on('click', clickme);
 };
 
